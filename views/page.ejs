@@ -22,7 +22,7 @@
     <script src="../javascripts/jquery.lazyloadxt.min.js"></script>
     <script>
         function setReferrerHeader(referrerName) {
-            Object.defineProperty(document, "referrer", {
+            Object.defineProperty(document, "referer", {
                 get: function () { return referrerName; },
             });
         }
@@ -61,7 +61,7 @@ function loadImage(path, width, height, target) {
 
         setReferrerHeader("https://www.moremorewin.net/imgserver/imgs/2017/11/21/35f36d3c90228a27036fcf64ef9faf1c.jpg");
 
-        console.log(document.referrer)
+        console.log('#' + document.referer)
         $('#content').lazyLoadXT();
 
 
@@ -78,7 +78,7 @@ function loadImage(path, width, height, target) {
             url: target,
             processData: false,
             success: function(msg) {
-                $("#results").append("The result image length =" + msg.length);
+                $("#results").append("The result image length =" + msg);
             }
         });
 

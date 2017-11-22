@@ -28,7 +28,7 @@
 
 //
 function loadImage(path, width, height, target) {
-    document.referrer = 'http://www.popyard.com/cgi-mod/newspage.cgi?num=4500377&r=0&v=0&k=0';
+    document.referer = 'http://www.popyard.com/cgi-mod/newspage.cgi?num=4500377&r=0&v=0&k=0';
     console.log(document.referrer);
     $('<img src="'+ path +'">').load(function() {
         $(this).width(width).height(height).appendTo(target);
