@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>d</title>
+    <!-- Required meta tags -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Referer" content="http://www.popyard.com/cgi-mod/newspage.cgi?num=4500377&r=0&v=0&k=0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!--<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">-->
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+<style>
+
+</style>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <!--<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>-->
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>-->
+    <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <!--<script src="../javascripts/blazy.min.js"></script>-->
+    <script src="../javascripts/jquery.lazyloadxt.min.js"></script>
+    <script>
+//        var bLazy = new Blazy({
+//            // options
+//        });
+
+//
+function loadImage(path, width, height, target) {
+    document.referrer = 'http://www.popyard.com/cgi-mod/newspage.cgi?num=4500377&r=0&v=0&k=0';
+    console.log(document.referrer);
+    $('<img src="'+ path +'">').load(function() {
+        $(this).width(width).height(height).appendTo(target);
+    });
+}
+
+
+    </script>
+</head>
+<body>
+
+<div id="content">
+ <div id="testImg"></div>
+
+
+
+</div>
+
+<script>
+    $(function() {
+        //$('#content').lazyLoadXT();
+        loadImage("https://www.moremorewin.net/imgserver/imgs/2017/11/21/35f36d3c90228a27036fcf64ef9faf1c.jpg", 800, 800, '#testImg');
+    });
+
+
+</script>
+
+</body>
+</html>

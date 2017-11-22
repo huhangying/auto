@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title><%= (page.title) %></title>
+    <!-- Required meta tags -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!--<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">-->
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+<style>
+
+</style>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <!--<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>-->
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>-->
+    <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <!--<script src="../javascripts/blazy.min.js"></script>-->
+    <script src="../javascripts/jquery.lazyloadxt.min.js"></script>
+    <script>
+        function setReferrerHeader(referrerName) {
+            Object.defineProperty(document, "referrer", {
+                get: function () { return referrerName; },
+            });
+        }
+//        var bLazy = new Blazy({
+//            // options
+//        });
+
+//
+function loadImage(path, width, height, target) {
+
+}
+
+
+    </script>
+</head>
+<body>
+<div id="results"></div>
+<h1><%= (page.title) %></h1>
+<div id="content">
+
+    <%= contentList.length %>
+    <% contentList.forEach(function(c) { %>
+    <% if (c.type === 'p') { %>
+        <p><%= c.content%></p>
+    <% } else { %>
+        <div class="text-center item">
+            <img data-src="<%= c.content.replace('http://', 'https://') + '?' + (new Date()).getTime() %>"
+                 src=data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
+                 class="rounded b-lazy" width="680">
+        </div>
+    <% }}); %>
+</div>
+
+<script>
+    $(function() {
+
+        setReferrerHeader("https://www.moremorewin.net/imgserver/imgs/2017/11/21/35f36d3c90228a27036fcf64ef9faf1c.jpg");
+
+        console.log(document.referrer)
+        $('#content').lazyLoadXT();
+
+
+        var target = "http://www.moremorewin.net/imgserver/imgs/2017/11/21/35f36d3c90228a27036fcf64ef9faf1c.jpg"
+        $.ajax({
+            type: "GET",
+            crossDomain: true,
+            beforeSend: function(request) {
+                request.setRequestHeader("Referrer", "http://www.popyard.com/cgi-mod/newspage.cgi?num=4500377&r=0&v=0&k=0");
+                request.setRequestHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+            },
+            headers: { "Referrer": "http://www.popyard.com/cgi-mod/newspage.cgi?num=4500377&r=0&v=0&k=0",
+                "Access-Control-Allow-Origin": "http://localhost:3000"},
+            url: target,
+            processData: false,
+            success: function(msg) {
+                $("#results").append("The result image length =" + msg.length);
+            }
+        });
+
+    });
+
+
+</script>
+
+</body>
+</html>
