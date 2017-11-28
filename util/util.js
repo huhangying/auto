@@ -16,13 +16,21 @@ var fetch = function (url) {
     url = getFullUrl(url);
     console.log('Processing', url);
 
-    return rp({
+    let options = {
         uri: url,
         headers: {
             'accept-language': 'en-US,en;q=0.8',
             'user-agent':'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36'
         }
-    });
+    };
+
+    rp(options)
+        .then(function (body) {
+            // POST succeeded...
+        })
+        .catch(function (err) {
+            // POST failed...
+        });
 };
 
 module.exports = {
