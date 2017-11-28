@@ -1,8 +1,8 @@
 global.Promise = require('bluebird');
-global.Promise.promisifyAll(require("mongodb"));
+// global.Promise.promisifyAll(require("mongodb"));
 global.mongoose = require('mongoose');
-global.mongoose.Promise = global.Promise;
 global.mongoose.connect('mongodb://127.0.0.1:27017/test', { useMongoClient: true });
+global.Promise.promisifyAll(global.mongoose);
 global.Util = require('./util/util');
 var CronJob = require('cron').CronJob;
 

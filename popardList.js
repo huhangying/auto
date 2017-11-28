@@ -40,12 +40,12 @@ var processList = function (myUrl) {
 
         .then(function (items) {
             // this.db = db;
-            return Promise.all(
+            return global.Promise.all(
                 items.map(function (item) {
                     return News.model.findOneAndUpdate({'id': item.id}, item, {upsert: true});
                     //return db.collection('news').updateAsync({'id': item.id}, {$set: item}, {upsert: true});
                 })
-            )
+            ).catch(err => { })
         })
         .then(function (result) {
 
