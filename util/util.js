@@ -24,7 +24,7 @@ var fetch = function (url) {
         }
     };
 
-    rp(options)
+    return rp(options)
         .then(function (body) {
             // POST succeeded...
         })
