@@ -9,7 +9,7 @@ var getFullUrl = function(str) {
     return str;
 };
 
-var fetch = function (url) {
+var fetch = async function (url) {
     if (!url) {
         return new global.Promise.reject();
     }
@@ -24,13 +24,7 @@ var fetch = function (url) {
         }
     };
 
-    return rp(options)
-        .then(function (body) {
-            // POST succeeded...
-        })
-        .catch(function (err) {
-            // POST failed...
-        });
+    return await rp(options);
 };
 
 module.exports = {
