@@ -47,7 +47,7 @@ var processList = function (myUrl) {
                 })
             ).catch(err => { })
         })
-        .then(function (result) {
+        .then(result => {
 
             console.log('Upserted', result.length, 'records');
 
