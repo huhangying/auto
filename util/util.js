@@ -21,7 +21,9 @@ var fetch = async function (url) {
         }
     };
 
-    return await rp(options);
+    return await rp(options)
+        .catch(function (err) {
+        });
 };
 
 module.exports = {
