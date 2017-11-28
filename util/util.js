@@ -10,9 +10,6 @@ var getFullUrl = function(str) {
 };
 
 var fetch = async function (url) {
-    if (!url) {
-        return new global.Promise.reject();
-    }
     url = getFullUrl(url);
     console.log('Processing', url);
 

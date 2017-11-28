@@ -19,6 +19,8 @@ var processDetails = function (myUrl, isSibling) {
     var rows = [];
     var siblings = [];
     var _href;
+    if (!myUrl) {return;}
+
     Util.fetch(myUrl)
         .then(function (body) {
             $ = cheerio.load(body);

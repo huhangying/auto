@@ -25,6 +25,8 @@ var i = 0;
 var processList = function (myUrl) {
     var cat;
     var rows = [];
+    if (!myUrl) {return;}
+
     return Util.fetch(myUrl)
         .then(function (body) {
             $ = cheerio.load(body);
