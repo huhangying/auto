@@ -1,4 +1,4 @@
-var rp = require('request-promise');
+var rp = require('request-promise').defaults({ simple: false });
 
 const baseUrl = 'http://www.popyard.com/cgi-mod';
 
@@ -19,8 +19,13 @@ var fetch = async function (url) {
             'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
             //'Accept-Encoding': 'gzip, deflate',
             'Accept-Language': 'en-US,en;q=0.9',
-            'User-Agent':'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36'
-        }
+            //'User-Agent':'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36'
+            'User-Agent':'Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.24) Gecko/20111109 CentOS/3.6.24-3.el6.centos Firefox/3.6.24'
+        },
+        maxAttempts : 15,
+        retryDelay : 2000,
+        followRedirect : false,
+        followAllRedirects : false
     };
 
     return await rp(options)
