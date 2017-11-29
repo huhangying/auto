@@ -23,7 +23,12 @@ var fetch = async function (url) {
         }
     };
 
-    return await rp(options).catch(error => console.error(error.stack));
+    return await rp(options)
+        .then(htmlString => {
+            console.log(`-----> get page length: ${htmlString.length}`);
+            return htmlString;
+        })
+        .catch(error => console.error(error.stack));
 };
 
 module.exports = {

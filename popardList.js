@@ -49,7 +49,7 @@ var processList = function (myUrl) {
                 }, Util.pause);
             }
             else {
-                console.log('*********** No more list to process, exiting. ****************');
+                console.log('*********** No more lists to process, exiting. ****************');
             }
         })
         .catch(error => console.error(error.stack));
@@ -90,7 +90,7 @@ var getPageList = function(myUrl, body) {
                 date: date,
                 href: href // use internally
             };
-            console.log(dev);
+            //console.log(dev);
             devs.push(dev);
         }
 
