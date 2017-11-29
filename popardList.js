@@ -1,6 +1,5 @@
 
-//var db = global.mongoose.connection;
-var cheerio = require('cheerio');
+let cheerio = require('cheerio');
 var url = require('url');
 
 var News = require('./db/controller/news.js');
@@ -60,6 +59,7 @@ var processList = function (myUrl) {
 var getPageList = function(myUrl, body) {
     var devs = [], dev, myId, href, title, from, date;
     var titles = [], froms = [];
+
 
     $ = cheerio.load(body);
     const cat = url.parse(myUrl, true).query.cate;
