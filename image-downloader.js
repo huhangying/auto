@@ -17,9 +17,11 @@ let list = [
 
 console.log(new Date())
 list.map(function(_url) {
-    downloadIMG(_url).then(function() {
-        console.log(new Date())
-    })
+    downloadIMG(_url)
+        .then(() => {
+            console.log(new Date())
+        })
+        .catch(err => console.log(err.stack));
 })
 
 
