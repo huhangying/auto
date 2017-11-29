@@ -93,7 +93,7 @@ var processDetails = function (myUrl, isSibling) {
                     }, Util.pause);
                 }
                 else {
-                    console.log('No more to process, exiting.');
+                    console.log('******************* No more pages to process, exiting. *****************');
                     db.close();
                 }
             }
@@ -124,8 +124,8 @@ var crawlUrlListFromDb = function() {
 
             // start processing!
             if (urls.length > 0) {
-                console.info(urls.length + ' urls are going to fulfill.')
-                console.log(urls);
+                console.info(`>>> ${urls.length} urls are going to fulfill.`)
+                //console.log(urls);
                 processDetails(urls[index]);
             }
 

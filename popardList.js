@@ -23,30 +23,23 @@ var $;
 var i = 0;
 
 var processList = function (myUrl) {
-    var cat;
-    var rows = [];
+    // var cat;
+    // var rows = [];
     if (!myUrl) {return;}
 
     return Util.fetch(myUrl)
-        .then(function (body) {
-            $ = cheerio.load(body);
-            cat = url.parse(myUrl, true).query.cate;
 
-            // page list
-            //$('.results > .row').eq(0).remove(); // remove header row
-            rows = $('p table tbody tr td font li');
-            return getPageList(cat, rows);
-        })
+        .then((body) => {
+            const items = getPageList(myUrl, body);
 
-        .then(function (items) {
-            // this.db = db;
             return global.Promise.all(
                 items.map(function (item) {
                     return News.model.findOneAndUpdate({'id': item.id}, item, {upsert: true});
                     //return db.collection('news').updateAsync({'id': item.id}, {$set: item}, {upsert: true});
                 })
-            ).catch(err => { })
+            )
         })
+
         .then(result => {
 
             console.log('Upserted', result.length, 'records');
@@ -57,19 +50,24 @@ var processList = function (myUrl) {
                 }, Util.pause);
             }
             else {
-                console.log('No more list to process, exiting.');
-                //db.close();
+                console.log('*********** No more list to process, exiting. ****************');
             }
         })
-        .catch(function (err) {
-            throw err;
-        });
+        .catch(error => console.error(error.stack));
 };
 
-
-var getPageList = function(cat, rows) {
+//
+var getPageList = function(myUrl, body) {
     var devs = [], dev, myId, href, title, from, date;
     var titles = [], froms = [];
+
+    $ = cheerio.load(body);
+    const cat = url.parse(myUrl, true).query.cate;
+
+    // page list
+    //$('.results > .row').eq(0).remove(); // remove header row
+    const rows = $('p table tbody tr td font li');
+
     rows.each(function () {
         href = $(this).find('a').attr('href');
         if (href) {
@@ -100,9 +98,9 @@ var getPageList = function(cat, rows) {
     return devs;
 };
 
-function fetchList() {
+async function fetchList() {
     // get started from the first url
-    return processList(urls[0]);
+    await processList(urls[0]);
 }
 
 

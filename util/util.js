@@ -1,6 +1,6 @@
 var rp = require('request-promise');
 
-var baseUrl = 'http://www.popyard.com/cgi-mod';
+const baseUrl = 'http://www.popyard.com/cgi-mod';
 
 var getFullUrl = function(str) {
     if (str.indexOf(baseUrl) < 0) {
@@ -21,9 +21,7 @@ var fetch = async function (url) {
         }
     };
 
-    return await rp(options)
-        .catch(function (err) {
-        });
+    return await rp(options).catch(error => console.error(error.stack));
 };
 
 module.exports = {
