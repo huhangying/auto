@@ -6,6 +6,7 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "axios": "^0.17.1",
     "bluebird": "^3.5.1",
     "body-parser": "~1.18.2",
     "cheerio": "^1.0.0-rc.2",
@@ -22,7 +23,6 @@
     "mongoose": "^4.13.2",
     "morgan": "~1.9.0",
     "request": "^2.83.0",
-    "request-promise": "^4.2.2",
     "serve-favicon": "~2.4.5",
     "url": "^0.11.0"
   }

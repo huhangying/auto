@@ -1,4 +1,5 @@
-var rp = require('request-promise').defaults({ simple: false });
+//var rp = require('request-promise').defaults({ simple: false });
+let axios = require('axios');
 
 const baseUrl = 'http://www.popyard.com/cgi-mod';
 
@@ -28,10 +29,11 @@ var fetch = async function (url) {
         followAllRedirects : false
     };
 
-    return await rp(options)
+    return await axios.get(url)
+    //return await rp(options)
         .then(htmlString => {
-            console.log(`-----> get page length: ${htmlString.length}`);
-            return htmlString;
+            //console.log(`-----> get page length: ${htmlString.data}`);
+            return htmlString.data;
         })
         .catch(error => console.error(error.stack));
 };
