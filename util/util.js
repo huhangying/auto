@@ -38,6 +38,7 @@ var fetch = async function (url) {
         //
         //     return data;
         // }],
+        responseType: 'text',
         httpAgent: new http.Agent({ keepAlive: true })
         // httpsAgent: new https.Agent({ keepAlive: true }),
         // maxAttempts : 15,
