@@ -2,6 +2,7 @@ var cheerio = require('cheerio');
 var url = require('url');
 
 var News = require('./db/controller/news.js');
+var myUtil = require('./util/util');
 
 var $;
 var urls = [
@@ -21,7 +22,7 @@ var processDetails = function (myUrl, isSibling) {
     var _href;
     if (!myUrl) {return;}
 
-    Util.fetch(myUrl)
+    myUtil.fetch(myUrl)
         .then(function (body) {
             $ = cheerio.load(body);
             // detailed page
@@ -83,14 +84,14 @@ var processDetails = function (myUrl, isSibling) {
             if ((!isSibling && siblingUrls.length > 0) || (isSibling && siblingIndex < siblingUrls.length)) {
                 setTimeout(function () {
                     processDetails(siblingUrls[siblingIndex], true);
-                }, Util.pause);
+                }, myUtil.pause);
             }
             // 如果本身不是sibling页面，而且没有siblings; 或者，本身是sibling而且是最后一页；接着分析下个页面
             else if ((!isSibling && siblingUrls.length === 0) || (isSibling && siblingIndex === siblingUrls.length)) {
                 if (index < urls.length - 1) {
                     setTimeout(function () {
                         processDetails(urls[index]);
-                    }, Util.pause);
+                    }, myUtil.pause);
                 }
                 else {
                     console.log('******************* No more pages to process, exiting. *****************');

@@ -3,6 +3,8 @@ let cheerio = require('cheerio');
 var url = require('url');
 
 var News = require('./db/controller/news.js');
+var myUtil = require('./util/util');
+
 
 var urls = [
     // 'http://www.popyard.com/cgi-mod/threads.cgi?cate=1&p=1&r=0',
@@ -26,7 +28,7 @@ var processList = function (myUrl) {
     // var rows = [];
     if (!myUrl) {return;}
 
-    return Util.fetch(myUrl)
+    return myUtil.fetch(myUrl)
 
         .then((body) => {
             const items = getPageList(myUrl, body);
@@ -46,7 +48,7 @@ var processList = function (myUrl) {
             if (++i < urls.length) {
                 setTimeout(function () {
                     processList(urls[i]);
-                }, Util.pause);
+                }, myUtil.pause);
             }
             else {
                 console.log('*********** No more lists to process, exiting. ****************');

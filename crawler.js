@@ -2,7 +2,6 @@ global.Promise = require('bluebird');
 global.mongoose = require('mongoose');
 global.mongoose.Promise = global.Promise;
 global.Promise.promisifyAll(global.mongoose);
-global.Util = require('./util/util');
 //var CronJob = require('cron').CronJob;
 
 const popyardList = require('./popardList');
