@@ -102,7 +102,7 @@ var getPageList = function(myUrl, body) {
 
 async function fetchList() {
     // get started from the first url
-    await processList(urls[0]);
+    return await processList(urls[0]);
 }
 
 
