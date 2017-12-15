@@ -38,6 +38,11 @@ var fetch = async function (url) {
         //
         //     return data;
         // }],
+        // timeout: 1000,
+        validateStatus: function (status) {
+            //return status >= 200 && status < 300; // default
+            return true;
+        },
         responseType: 'text',
         httpAgent: new http.Agent({ keepAlive: true })
         // httpsAgent: new https.Agent({ keepAlive: true }),
