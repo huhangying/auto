@@ -59,8 +59,8 @@ var fetch = async function (url) {
 
         })
         .catch(error => {
-            console.error(error.stack);
-            return `<html>${error.stack} | ${JSON.stringify(error)}</html>`;
+            console.error(error.stack + '|' + error );
+            return `<html>${error.stack}</html>`;
         });
 };
 
