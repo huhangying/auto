@@ -60,7 +60,7 @@ var fetch = async function (url) {
         })
         .catch(error => {
             console.error(error.stack);
-            return `<html>${error.stack}</html>`;
+            return `<html>${error.stack} | ${error.code}</html>`;
         });
 };
 

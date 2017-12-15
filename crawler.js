@@ -9,7 +9,7 @@ const popyard = require('./popard.js');
 
 async function prepare() {
     const db = global.mongoose.connect('mongodb://127.0.0.1:27017/test', { useMongoClient: true });
-    return await db.dropDatabase();
+    await db.dropDatabase();
 }
 prepare().catch(error => console.error(error.stack));
 
