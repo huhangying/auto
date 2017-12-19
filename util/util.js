@@ -1,6 +1,7 @@
 //var rp = require('request-promise').defaults({ simple: false });
 let axios = require('axios');
 let http = require('http');
+require('axios-debug-log');
 
 const baseUrl = 'http://www.popyard.com/cgi-mod/';
 
