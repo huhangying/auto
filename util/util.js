@@ -39,12 +39,12 @@ var fetch = async function (url) {
         //
         //     return data;
         // }],
-        timeout: 2000,
+        timeout: 5000,
         // validateStatus: function (status) {
         //     //return status >= 200 && status < 300; // default
         //     return true;
         // },
-        httpAgent: new http.Agent({ keepAlive: false })
+        //httpAgent: new http.Agent({ keepAlive: false })
         // httpsAgent: new https.Agent({ keepAlive: true }),
         // maxAttempts : 15,
         // retryDelay : 2000,
