@@ -10,7 +10,7 @@ var newsSchema = global.mongoose.Schema({
         content: { type: String },
         hasSiblings: {type: Boolean},
         siblingNum: { type: Number },
-        siblindId: { type: String }
+        siblingId: { type: String }
     }
     // , {
     //     timestamps: true

@@ -68,7 +68,7 @@ var processDetails = function (myUrl, isSibling) {
             if (isSibling) {
                 siblingIndex++;  // 指向下一个 sibling 页面
                 item.siblingNum = siblingIndex + 1; // UI 上显示的 page number
-                item.siblindId = siblingId;
+                item.siblingId = siblingId;
             }
             else {
                 index++; // 指向下一个处理的页面
@@ -95,7 +95,6 @@ var processDetails = function (myUrl, isSibling) {
                 }
                 else {
                     console.log('******************* No more pages to process, exiting. *****************');
-                    db.close();
                 }
             }
             else {

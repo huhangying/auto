@@ -44,7 +44,7 @@ module.exports = {
                 });
     },
     getSiblings: function(id) {
-        return   NewsModel.find({siblindId: id}, '-_id title from date content siblingNum')
+        return   NewsModel.find({siblingId: id}, '-_id title from date content siblingNum')
             .exec(function(err, items) {
                 if (err) {
                     return [];
@@ -156,7 +156,7 @@ module.exports = {
 
         if (req.params && req.params.id) {
 
-            NewsModel.find({siblindId: req.params.id})
+            NewsModel.find({siblingId: req.params.id})
                 .exec(function(err, items) {
                     if (err) {
                         return Status.returnStatus(res, Status.ERROR, err);
