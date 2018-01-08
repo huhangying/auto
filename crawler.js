@@ -2,7 +2,7 @@ global.Promise = require('bluebird');
 global.mongoose = require('mongoose');
 global.mongoose.Promise = global.Promise;
 global.Promise.promisifyAll(global.mongoose);
-//var CronJob = require('cron').CronJob;
+var CronJob = require('cron').CronJob;
 
 const popyardList = require('./popardList');
 const popyard = require('./popard.js');
@@ -14,23 +14,26 @@ async function prepare() {
 prepare().catch(error => console.error(error.stack));
 
 
-popyardList.fetchList().then(
-    () => {
-        popyard.crawlUrlListFromDb();
-    }
-);
+// popyardList.fetchList().then(
+//     () => {
+//         popyard.crawlUrlListFromDb();
+//     }
+// );
 
 
-// var job = new CronJob({
-//     cronTime: '* 22 * * * *',
-//     onTick: function() {
-//         /*
-//          * Runs every weekday (Monday through Friday)
-//          * at 11:30:00 AM. It does not run on Saturday
-//          * or Sunday.
-//          */
-//         console.log(new Date());
-//     },
-//     start: false
-// });
-// job.start();
+var job = new CronJob({
+    cronTime: '0 22 */3 * * *',
+    onTick: function() {
+        /*
+         * Runs every two hours
+         */
+        //console.log(new Date());
+        popyardList.fetchList().then(
+            () => {
+                popyard.crawlUrlListFromDb();
+            }
+        );
+    },
+    start: false
+});
+job.start();
