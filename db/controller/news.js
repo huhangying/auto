@@ -78,6 +78,30 @@ module.exports = {
         }
         return afterList;
     },
+    updateItem: async (item) => {
+        // check if it has been loaded into the db first!
+        return new Promise(
+            async (resolve, reject) => {
+                // await NewsModel.where('id').eq(item.id)
+                await NewsModel.findOne({id: item.id})
+                    .exec(async function(err, retItem) {
+                        if (err) {
+                            reject('error');
+                        }
+                        if (retItem && retItem.id) {
+                            resolve(retItem); // existed data. ignore
+                        }
+                        await NewsModel.findOneAndUpdate({id: item.id}, item, {upsert: true, 'new': true})
+                            .exec(function(err, _item) {
+                                if (err) {
+                                    reject('error');
+                                }
+                                resolve(_item && _item._doc);
+                            });
+                    });
+            }
+        );
+    },
 
 
     // news/all/:number
@@ -90,8 +114,8 @@ module.exports = {
         }
 
         NewsModel.find({})
-            .sort({updated: -1})
-            .limit(number)
+            // .sort({updated: -1})
+            // .limit(number)
             .exec(function(err, users){
                 if (err) {
                     return Status.returnStatus(res, Status.ERROR, err);

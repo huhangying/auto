@@ -28,23 +28,23 @@ var processList = function (myUrl) {
     // var rows = [];
     if (!myUrl) {return;}
 
+    let results = [];
     return myUtil.fetch(myUrl)
 
         .then((body) => {
             const items = getPageList(myUrl, body);
 
-            return global.Promise.all(
-                items.map(function (item) {
-                    return News.model.findOneAndUpdate({'id': item.id}, item, {upsert: true});
-                    //return db.collection('news').updateAsync({'id': item.id}, {$set: item}, {upsert: true});
-                })
-            )
+             return Promise.map(items,
+                item => {
+                 return News.updateItem(item);
+                });
         })
+        .then((results) => {
+            results = results.filter(result => {
+                return result && result.id;
+            });
 
-        .then(result => {
-
-            console.log('Upserted', result.length, 'records');
-
+            console.log('Upserted', results.length, 'records');
             if (++i < urls.length) {
                 setTimeout(function () {
                     processList(urls[i]);

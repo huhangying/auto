@@ -1,5 +1,5 @@
 var newsSchema = global.mongoose.Schema({
-        id: String,
+        id: { type: String},
         title: String,
         cat: String,
         from: String,
@@ -11,7 +11,8 @@ var newsSchema = global.mongoose.Schema({
         hasSiblings: {type: Boolean},
         siblingNum: { type: Number },
         siblingId: { type: String }
-    }
+    },
+    {collection: 'news'}
     // , {
     //     timestamps: true
     // }

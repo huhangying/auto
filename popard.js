@@ -3,6 +3,8 @@ var url = require('url');
 
 var News = require('./db/controller/news.js');
 var myUtil = require('./util/util');
+var imgDownloader = require('./image-downloader');
+var config = require('./util/config');
 
 var $;
 var urls = [
@@ -23,7 +25,7 @@ var processDetails = function (myUrl, isSibling) {
     if (!myUrl) {return;}
 
     myUtil.fetch(myUrl)
-        .then(function (body) {
+        .then( (body) => {
             $ = cheerio.load(body);
             // detailed page
             myId = url.parse(myUrl, true).query.num;
@@ -45,13 +47,16 @@ var processDetails = function (myUrl, isSibling) {
                 }
             }
 
-            var item, content = '';
+            let item, content = '';
             rows.each(function (index, row) {
                 if (row.name === 'p' && index > 0) { // text. first p is for ad. remove it.
                     p = $(this).text();
                 }
                 else if (row.name === 'center') { // image
                     p = $(this).find('table a img').attr('src');
+                    if (p && config.downloadImage) {
+                        p = imgDownloader.downloadImage(p); // remove the image link if failed to download
+                    }
                 }
                 if (p) {
                     content += p + '|';

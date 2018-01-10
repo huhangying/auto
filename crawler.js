@@ -14,11 +14,11 @@ async function prepare() {
 prepare().catch(error => console.error(error.stack));
 
 
-// popyardList.fetchList().then(
-//     () => {
-//         popyard.crawlUrlListFromDb();
-//     }
-// );
+popyardList.fetchList().then(
+    () => {
+        popyard.crawlUrlListFromDb();
+    }
+);
 
 
 var job = new CronJob({
@@ -36,4 +36,4 @@ var job = new CronJob({
     },
     start: false
 });
-job.start();
+//job.start();
