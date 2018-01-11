@@ -13,6 +13,20 @@ router.get('/', function(req, res, next) {
 
 });
 
+/* Category page. */
+router.get('/cat/:id', function(req, res, next) {
+    if (req.params && req.params.id) {
+        News.getListByCat(req.params.id).then(
+            function(list) {
+                res.render('cat', { title: 'Express', list: list });
+            }
+        );
+    }
+
+
+});
+
+// Page details
 router.get('/page/:id', function(req, res, next) {
     if (req.params && req.params.id) {
         News.get(req.params.id).then(

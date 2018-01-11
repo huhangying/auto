@@ -43,6 +43,15 @@ module.exports = {
                     return (item);
                 });
     },
+    getListByCat: function(cid) {
+        return   NewsModel.find({cat: cid, loaded: true, hasSiblings: {$exists: true}})
+            .exec(function(err, items) {
+                if (err) {
+                    return [];
+                }
+                return (items);
+            });
+    },
     getSiblings: function(id) {
         return   NewsModel.find({siblingId: id}, '-_id title from date content siblingNum')
             .exec(function(err, items) {
