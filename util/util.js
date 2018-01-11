@@ -51,7 +51,7 @@ var fetch = async function (url) {
         //
         //     return data;
         // }],
-        timeout: 20000,
+        timeout: 60000,
         // validateStatus: function (status) {
         //     //return status >= 200 && status < 300; // default
         //     return true;
