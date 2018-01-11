@@ -78,26 +78,28 @@ module.exports = {
         }
         return afterList;
     },
-    updateItem: async (item) => {
+    updateItem: (item) => {
         // check if it has been loaded into the db first!
-        return new Promise(
-            async (resolve, reject) => {
-                // await NewsModel.where('id').eq(item.id)
-                await NewsModel.findOne({id: item.id})
-                    .exec(async function(err, retItem) {
+        return new global.Promise(
+            (resolve, reject) => {
+                NewsModel.count({id: item.id, loaded: true})
+                    .exec(function(err, count) {
                         if (err) {
                             reject('error');
                         }
-                        if (retItem && retItem.id) {
-                            resolve(retItem); // existed data. ignore
+                        if (count > 0) {
+                            resolve(); // existed data. ignore
                         }
-                        await NewsModel.findOneAndUpdate({id: item.id}, item, {upsert: true, 'new': true})
-                            .exec(function(err, _item) {
-                                if (err) {
-                                    reject('error');
-                                }
-                                resolve(_item && _item._doc);
-                            });
+                        else {
+                            NewsModel.findOneAndUpdate({id: item.id}, item, {upsert: true, 'new': true})
+                                .exec(function(err, _item) {
+                                    if (err) {
+                                        reject('error');
+                                    }
+                                    resolve(_item && _item._doc);
+                                });
+                        }
+
                     });
             }
         );
