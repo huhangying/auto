@@ -18,7 +18,7 @@ const downloadImage = async (url) => {
             'User-Agent':'Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.24) Gecko/20111109 CentOS/3.6.24-3.el6.centos Firefox/3.6.24'
         },
         url: url,
-        dest: './images/popyard'// image保存的目录
+        dest: './public/images/popyard'// image保存的目录
     })
         .then(({filename}) => {
             console.log(`File saved to ${filename} @ ${(new Date()).toISOString()}`);

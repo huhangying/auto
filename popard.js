@@ -55,7 +55,8 @@ var processDetails = function (myUrl, isSibling) {
                 else if (row.name === 'center') { // image
                     p = $(this).find('table a img').attr('src');
                     if (p && config.downloadImage) {
-                        p = imgDownloader.downloadImage(p); // remove the image link if failed to download
+                        imgDownloader.downloadImage(p); // run it in the back
+                        p = p.replace(/^.*[\\\/]/, ''); // save fileName only to db
                     }
                 }
                 if (p) {
