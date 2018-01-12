@@ -44,7 +44,7 @@ module.exports = {
                 });
     },
     getListByCat: function(cid) {
-        return   NewsModel.find({cat: cid, loaded: true, hasSiblings: {$exists: true}})
+        return   NewsModel.find({cat: cid, loaded: true, hasSiblings: {$exists: true}, title: {$exists: true}})
             .exec(function(err, items) {
                 if (err) {
                     return [];
