@@ -43,8 +43,8 @@ var fetch = async function (url) {
             'User-Agent':'Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.24) Gecko/20111109 CentOS/3.6.24-3.el6.centos Firefox/3.6.24'
         },
         proxy: {
-            host: '12.199.82.229',
-            port: 8080
+            host: '178.22.148.122',
+            port: 3129
         },
         // transformResponse: [function (data) {
         //     // Do whatever you want to transform the data

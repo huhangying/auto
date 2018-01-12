@@ -91,7 +91,7 @@ module.exports = {
         // check if it has been loaded into the db first!
         return new global.Promise(
             (resolve, reject) => {
-                NewsModel.count({id: item.id, loaded: true})
+                NewsModel.count({id: item.id, content: {$exists: true, $ne: ''}})
                     .exec(function(err, count) {
                         if (err) {
                             reject('error');
