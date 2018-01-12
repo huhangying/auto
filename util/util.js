@@ -42,10 +42,10 @@ var fetch = async function (url) {
             //'User-Agent':'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36'
             'User-Agent':'Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.24) Gecko/20111109 CentOS/3.6.24-3.el6.centos Firefox/3.6.24'
         },
-        // proxy: {
-        //     host: '178.22.148.122',
-        //     port: 3129
-        // },
+        proxy: {
+            host: '139.59.165.94',
+            port: 8118
+        },
         // transformResponse: [function (data) {
         //     // Do whatever you want to transform the data
         //
