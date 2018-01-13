@@ -53,7 +53,7 @@ module.exports = {
             });
     },
     getSiblings: function(id) {
-        return   NewsModel.find({siblingId: id}, '-_id title from date content siblingNum')
+        return   NewsModel.find({siblingId: id}, '-_id id title cat from date content siblingNum')
             .exec(function(err, items) {
                 if (err) {
                     return [];

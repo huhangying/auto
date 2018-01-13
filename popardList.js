@@ -7,8 +7,8 @@ var myUtil = require('./util/util');
 
 
 var urls = [
-    // 'http://www.popyard.com/cgi-mod/threads.cgi?cate=1&p=1&r=0',
-    // 'http://www.popyard.com/cgi-mod/threads.cgi?cate=2&p=1&r=0',
+    'http://www.popyard.com/cgi-mod/threads.cgi?cate=1&p=1&r=0',
+    'http://www.popyard.com/cgi-mod/threads.cgi?cate=2&p=1&r=0',
     // 'http://www.popyard.com/cgi-mod/threads.cgi?cate=3&p=1&r=0',
     // 'http://www.popyard.com/cgi-mod/threads.cgi?cate=4&p=1&r=0',
     // 'http://www.popyard.com/cgi-mod/threads.cgi?cate=5&p=1&r=0',
@@ -18,7 +18,7 @@ var urls = [
     // 'http://www.popyard.com/cgi-mod/threads.cgi?cate=9&p=1&r=0',
     // 'http://www.popyard.com/cgi-mod/threads.cgi?cate=10&p=1&r=0',
     // 'http://www.popyard.com/cgi-mod/threads.cgi?cate=11&p=1&r=0',
-    'http://www.popyard.com/cgi-mod/threads.cgi?cate=12&p=1&r=0'
+    //'http://www.popyard.com/cgi-mod/threads.cgi?cate=12&p=1&r=0'
 ];
 var $;
 var i = 0;

@@ -7,17 +7,13 @@ var imgDownloader = require('./image-downloader');
 var config = require('./util/config');
 
 var $;
-var urls = [
-    'http://www.popyard.com/cgi-mod/newspage.cgi?num=4487316&r=0&v=0&k=0',
-    'http://www.popyard.com/cgi-mod/newspage.cgi?num=4487321&r=0&v=0&k=0',
-    'http://www.popyard.com/cgi-mod/newspage.cgi?num=4487263&r=0&v=0&k=0'
-];
+var pages = [];
 var siblingUrls = [];
 var index = 0;
 var siblingIndex = 0;
 var siblingId;
 
-var processDetails = function (myUrl, isSibling) {
+var processDetails = function (myUrl, isSibling, firstSibling) {
     var myId, p;
     var rows = [];
     var siblings = [];
@@ -67,7 +63,6 @@ var processDetails = function (myUrl, isSibling) {
             content = content.slice(0, -1); // remove last character
             item = {
                 id: myId,
-                //href: myUrl,
                 content: content,
                 loaded: true
             };
@@ -75,10 +70,18 @@ var processDetails = function (myUrl, isSibling) {
                 siblingIndex++;  // 指向下一个 sibling 页面
                 item.siblingNum = siblingIndex + 1; // UI 上显示的 page number
                 item.siblingId = siblingId;
+                item.title = firstSibling.title;
+                item.cat = firstSibling.cat;
+                item.from = firstSibling.from;
+                item.date = firstSibling.date;
             }
             else {
                 index++; // 指向下一个处理的页面
-                item.hasSiblings = (siblingUrls.length > 0)
+                item.hasSiblings = (siblingUrls.length > 0);
+                if (item.hasSiblings) {
+                    item.siblingId = item.id;
+                    item.siblingNum = 1;
+                }
             }
             console.log(item);
             return News.model.findOneAndUpdate({'id': item.id}, item, {upsert: true});
@@ -89,14 +92,14 @@ var processDetails = function (myUrl, isSibling) {
             // 如果本身不是sibling页面，而且有siblings; 或者本身是sibling页面，但是没有到最后一个,接着分析下一个sibling页面
             if ((!isSibling && siblingUrls.length > 0) || (isSibling && siblingIndex < siblingUrls.length)) {
                 setTimeout(function () {
-                    processDetails(siblingUrls[siblingIndex], true);
+                    processDetails(siblingUrls[siblingIndex], true, firstSibling);
                 }, myUtil.pause);
             }
             // 如果本身不是sibling页面，而且没有siblings; 或者，本身是sibling而且是最后一页；接着分析下个页面
             else if ((!isSibling && siblingUrls.length === 0) || (isSibling && siblingIndex === siblingUrls.length)) {
-                if (index < urls.length - 1) {
+                if (index < pages.length - 1) {
                     setTimeout(function () {
-                        processDetails(urls[index]);
+                        processDetails(pages[index].href, false, pages[index]);
                     }, myUtil.pause);
                 }
                 else {
@@ -119,20 +122,19 @@ var crawlUrlListFromDb = function() {
         .then(function(results) {
 
             // reset environment
-            urls = [];
+            pages = [];
             index = 0;
 
             results.map(function(result) {
                 if (result.href) {
-                    urls.push(result.href);
+                    pages.push(result);
                 }
             });
 
             // start processing!
-            if (urls.length > 0) {
-                console.info(`>>> ${urls.length} urls are going to fulfill.`)
-                //console.log(urls);
-                processDetails(urls[index]);
+            if (pages.length > 0) {
+                console.info(`>>> ${pages.length} pages are going to fulfill.`)
+                processDetails(pages[index].href, false, pages[index]);
             }
 
         });

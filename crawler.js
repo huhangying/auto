@@ -14,15 +14,15 @@ async function prepare() {
 prepare().catch(error => console.error(error.stack));
 
 
-popyardList.fetchList().then(
-    () => {
-        popyard.crawlUrlListFromDb();
-    }
-);
+// popyardList.fetchList().then(
+//     () => {
+//         popyard.crawlUrlListFromDb();
+//     }
+// );
 
 
 var job = new CronJob({
-    cronTime: '0 22 */3 * * *',
+    cronTime: '0 22 6,12,18 * * *',
     onTick: function() {
         /*
          * Runs every two hours
@@ -36,4 +36,4 @@ var job = new CronJob({
     },
     start: false
 });
-//job.start();
+job.start();

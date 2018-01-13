@@ -30,20 +30,15 @@ router.get('/cat/:id', function(req, res, next) {
 router.get('/page/:id', function(req, res, next) {
     if (req.params && req.params.id) {
         News.get(req.params.id).then(
-            function (page) {
+            async function (page) {
               var contentList = News.buildContent(page._doc.content);
-                //res.header("Cache-Control", "max-age=0");
-                // res.header("Cache-Control", "no-cache, no-store, must-revalidate");
-               //  res.header("Pragma", "no-cache");
-               // res.header("Expires", 0);
-               //  res.header("Host", "www.moremorewin.net")
-               //  res.header("Referer", "http://www.popyard.com/cgi-mod/newspage.cgi?num=4499170&r=0&v=0&k=0")
-               //  res.header('Last-Modified', (new Date()).toUTCString());
-               //  res.header('Cache-Control', 'public, must-revalidate, max-age=0');
-               //  res.header('ETag', 'de0b1a-3e422-55e671d70b939');
-               //  //  res.header("Host", "www.moremorewin.net")
-               //  res.header("Referer", "http://www.popyard.com/cgi-mod/newspage.cgi?num=4499170&r=0&v=0&k=0");
-                res.render('page', {title: page.title, page: page, contentList: contentList});
+              if (page.siblingNum > 0) {
+                  await News.getSiblings(page.siblingId).then((siblings) => {
+                      page.siblings = siblings;
+                  });
+              }
+
+              res.render('page', {title: page.title, page: page, contentList: contentList});
             }
         );
     }
