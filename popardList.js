@@ -31,8 +31,8 @@ var processList = function (myUrl) {
     let results = [];
     return myUtil.fetch(myUrl)
 
-        .then((body) => {
-            const items = getPageList(myUrl, body);
+        .then(async (body) => {
+            const items = await getPageList(myUrl, body);
 
              return Promise.map(items,
                 item => {

@@ -39,9 +39,10 @@ var fetch = async function (url) {
             host: '66.82.144.29',
             port: 8080
         },
-        timeout: 40000,
+        timeout: 3000,
+        maxRedirects: 5, // default
         responseType: 'text',
-        httpAgent: new http.Agent({ keepAlive: false })
+        httpAgent: new http.Agent({ keepAlive: true })
     };
 
     return await axios.get(url, options)

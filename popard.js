@@ -68,12 +68,12 @@ var processDetails = function (myUrl, isSibling, firstSibling) {
             };
             if (isSibling) {
                 siblingIndex++;  // 指向下一个 sibling 页面
-                item.siblingNum = siblingIndex + 1; // UI 上显示的 page number
-                item.siblingId = siblingId;
                 item.title = firstSibling.title;
                 item.cat = firstSibling.cat;
                 item.from = firstSibling.from;
                 item.date = firstSibling.date;
+                item.siblingNum = siblingIndex + 1; // UI 上显示的 page number
+                item.siblingId = siblingId;
             }
             else {
                 index++; // 指向下一个处理的页面
