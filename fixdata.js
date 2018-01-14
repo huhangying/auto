@@ -93,9 +93,9 @@ setTimeout(function () {
             index = 0;
 
             results.map(function (result) {
-                if (result.href) {
+                //if (result.href) {
                     pages.push(result);
-                }
+                //}
             });
 
             console.info(`>>> ${pages.length} page content are going to fix.`);
