@@ -3,6 +3,8 @@ let http = require('http');
 require('axios-debug-log');
 
 const baseUrl = 'http://www.popyard.com/cgi-mod/';
+const maxTry = 3;
+let currentTry = 0;
 
 var getFullUrl = function(str) {
     if (str.indexOf(baseUrl) < 0) {
@@ -56,8 +58,17 @@ var fetch = async function (url) {
             }
         })
         .catch(error => {
-            console.error(error.stack + '|' + error );
-            return `<html>${error.stack}</html>`;
+            if (currentTry < maxTry) {
+                currentTry++;
+                console.error(`${url} tried ${currentTry} time.`);
+                return fetch(url);
+            }
+            else {
+                console.error(`${url} tried ${currentTry} time. -- failed.`);
+                console.error(error.stack + '|' + error );
+                currentTry = 0;
+                return `<html>${error.stack}</html>`;
+            }
         });
 };
 
