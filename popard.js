@@ -97,7 +97,7 @@ var processDetails = function (myUrl, isSibling, firstSibling) {
             }
             // 如果本身不是sibling页面，而且没有siblings; 或者，本身是sibling而且是最后一页；接着分析下个页面
             else if ((!isSibling && siblingUrls.length === 0) || (isSibling && siblingIndex === siblingUrls.length)) {
-                if (index < pages.length - 1) {
+                if (index < pages.length) {
                     setTimeout(function () {
                         processDetails(pages[index].href, false, pages[index]);
                     }, myUtil.pause);
@@ -131,9 +131,9 @@ var crawlUrlListFromDb = function() {
                 }
             });
 
+            console.info(`>>> ${pages.length} pages are going to fulfill.`);
             // start processing!
             if (pages.length > 0) {
-                console.info(`>>> ${pages.length} pages are going to fulfill.`)
                 processDetails(pages[index].href, false, pages[index]);
             }
 

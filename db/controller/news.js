@@ -3,9 +3,21 @@ var NewsModel = require('../model/news.js');
 module.exports = {
     model: NewsModel,
 
+    //
     GetTodoList: function() {
         return NewsModel.find({ loaded: {$ne: true}})
             //.sort({date: -1})
+            .exec(function(err, items){
+                if (err) {
+                    console.log('error')
+                }
+                return (items);
+            });
+    },
+
+    GetFixDataList: function() {
+        return NewsModel.find({ loaded: true, content: ''})
+        //.sort({date: -1})
             .exec(function(err, items){
                 if (err) {
                     console.log('error')

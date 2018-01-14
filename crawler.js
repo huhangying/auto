@@ -14,11 +14,14 @@ async function prepare() {
 prepare().catch(error => console.error(error.stack));
 
 
-popyardList.fetchList().then(
-    () => {
-        popyard.crawlUrlListFromDb();
-    }
-);
+setTimeout( () => {
+    popyardList.fetchList().then(
+        () => {
+            popyard.crawlUrlListFromDb();
+        }
+    );
+}, 500);
+
 
 
 var job = new CronJob({
@@ -28,11 +31,13 @@ var job = new CronJob({
          * Runs every two hours
          */
         //console.log(new Date());
-        popyardList.fetchList().then(
-            () => {
-                popyard.crawlUrlListFromDb();
-            }
-        );
+        setTimeout( () => {
+            popyardList.fetchList().then(
+                () => {
+                    popyard.crawlUrlListFromDb();
+                }
+            );
+        }, 500);
     },
     start: false
 });

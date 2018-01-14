@@ -24,6 +24,7 @@ var getUri = function(str) {
     return str;
 };
 
+//todo: support retry when failed
 var fetch = async function (url) {
     //url = getUri(url);
     url = getFullUrl(url);
