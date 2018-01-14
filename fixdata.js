@@ -26,7 +26,9 @@ prepare().catch(error => console.error(error.stack));
 var processDetails = function (pageId, myUrl) {
     var p;
     var rows = [];
-    if (!myUrl) {return;}
+    if (!myUrl) {
+        myUrl = `./newspage.cgi?num=${pageId}&r=0&v=0`; //hardcode !!!
+    }
 
     myUtil.fetch(myUrl)
         .then( (body) => {
@@ -43,7 +45,7 @@ var processDetails = function (pageId, myUrl) {
                 else if (row.name === 'center') { // image
                     p = $(this).find('table a img').attr('src');
                     if (p && config.downloadImage) {
-                        imgDownloader.downloadImage(p); // run it in the back
+                        //imgDownloader.downloadImage(p); // run it in the back // no need to download image when fixing data
                         p = p.replace(/^.*[\\\/]/, ''); // save fileName only to db
                     }
                 }
