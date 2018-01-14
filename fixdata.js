@@ -61,7 +61,7 @@ var processDetails = function (pageId, myUrl) {
             return News.model.update({'id': pageId}, {content: content});
         })
 
-        .then(function (result) {
+        .then((result) => {
 
             if (index < pages.length) {
                 setTimeout(function () {
@@ -70,6 +70,7 @@ var processDetails = function (pageId, myUrl) {
             }
             else {
                 console.log('******************* No more pages to process, exiting. *****************');
+                process.exit(1);
             }
 
         })
@@ -102,6 +103,9 @@ setTimeout(function () {
             // start processing!
             if (pages.length > 0) {
                 processDetails(pages[index].id, pages[index].href);
+            }
+            else {
+                process.exit(1);
             }
 
         });

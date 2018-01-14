@@ -26,7 +26,7 @@ var getUri = function(str) {
     return str;
 };
 
-//todo: support retry when failed
+//todo: support retry with different proxy when failed
 var fetch = async function (url) {
     //url = getUri(url);
     url = getFullUrl(url);
