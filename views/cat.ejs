@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Hello, world!</title>
+    <title><%= title %>新闻</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -17,11 +17,13 @@
             <li class="breadcrumb-item"><a href="/">Home</a></li>
         </ol>
     </nav>
-    <h2><%= title %></h2>
+    <h3 class="text-center pb-2"><%= title %>新闻</h3>
 
     <ul>
         <% list.forEach(function(article) { %>
-        <li><a href="../page/<%= article.id %>"><%= article.title %> - <%= article.from %>  <%= article.date %></a> </li>
+        <li><a href="../page/<%= article.id %>"><%= article.title %> -
+                <small class="border border-secondary rounded text-secondary px-1"><%= article.from %></small>
+                <%= article.date.toLocaleDateString() %></a> </li>
         <% }); %>
     </ul>
 
