@@ -6,7 +6,7 @@ module.exports = {
     //
     GetTodoList: function() {
         return NewsModel.find({ loaded: {$ne: true}})
-            //.sort({date: -1})
+            .sort({date: -1})
             .exec(function(err, items){
                 if (err) {
                     console.log('error')
@@ -17,7 +17,7 @@ module.exports = {
 
     GetFixDataList: function() {
         return NewsModel.find({ loaded: true, content: ''})
-        //.sort({date: -1})
+            .sort({date: -1})
             .exec(function(err, items){
                 if (err) {
                     console.log('error')
@@ -38,7 +38,7 @@ module.exports = {
     },
     getAllLoaded: function() {
         return NewsModel.find({ loaded: true} , '-_id id title from date loaded')
-        //.sort({date: -1})
+            .sort({date: -1})
             .exec(function(err, items){
                 if (err) {
                     console.log('error')
@@ -57,6 +57,7 @@ module.exports = {
     },
     getListByCat: function(cid) {
         return   NewsModel.find({cat: cid, loaded: true, hasSiblings: {$exists: true}, title: {$exists: true}})
+            .sort({date: -1})
             .exec(function(err, items) {
                 if (err) {
                     return [];

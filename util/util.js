@@ -3,7 +3,7 @@ let http = require('http');
 require('axios-debug-log');
 
 const baseUrl = 'http://www.popyard.com/cgi-mod/';
-const maxTry = 5;
+const maxTry = 10;
 let currentTry = 0;
 let proxy = {};
 
@@ -28,7 +28,7 @@ var getUri = function(str) {
 };
 
 const getAProxy = async () => {
-    let aproxy = await axios.get('https://gimmeproxy.com/api/getProxy?get=true&minSpeed=50');
+    let aproxy = await axios.get('https://gimmeproxy.com/api/getProxy?get=true&minSpeed=50&maxCheckPeriod=3600');
     aproxy = {
         host: aproxy.data.ip,
         port: aproxy.data.port
