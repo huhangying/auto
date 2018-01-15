@@ -19,6 +19,7 @@ var index = 0;
 
 async function prepare() {
     const db = global.mongoose.connect('mongodb://127.0.0.1:27017/test', { useMongoClient: true });
+    await myUtil.initProxy();
     //await db.dropDatabase();
 }
 prepare().catch(error => console.error(error.stack));

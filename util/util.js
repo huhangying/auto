@@ -5,10 +5,7 @@ require('axios-debug-log');
 const baseUrl = 'http://www.popyard.com/cgi-mod/';
 const maxTry = 5;
 let currentTry = 0;
-let proxy = {
-    host: '66.82.144.29',
-    port: 8080
-};
+let proxy = {};
 
 var getFullUrl = function(str) {
     if (str.indexOf(baseUrl) < 0) {
@@ -30,20 +27,25 @@ var getUri = function(str) {
     return str;
 };
 
-const getAProxy = async (url) => {
-    url = 'https://gimmeproxy.com/api/getProxy';
-    let proxy = await axios.get(url);
-    return {
-        host: proxy.data.ip,
-        port: proxy.data.port
+const getAProxy = async () => {
+    let aproxy = await axios.get('https://gimmeproxy.com/api/getProxy?get=true&minSpeed=50');
+    aproxy = {
+        host: aproxy.data.ip,
+        port: aproxy.data.port
     }
+    console.log('change to a proxy: ', JSON.stringify(aproxy))
+    return aproxy;
+};
+
+const initProxy = async() => {
+    proxy = undefined;
 }
 
 //todo: support retry with different proxy when failed
 var fetch = async function (url) {
     //url = getUri(url);
     url = getFullUrl(url);
-    console.log('Processing', url);
+    console.log('Processing', url, 'proxy:', JSON.stringify(proxy));
 
     let options = {
         // baseURL: baseUrl,
@@ -69,9 +71,9 @@ var fetch = async function (url) {
         })
         .catch(async error => {
             if (currentTry < maxTry) {
-                console.error(`${url} tried ${currentTry} time. -- proxy: ${proxy.host}:${proxy.port}`);
                 currentTry++;
-                proxy = (await getAProxy()).data; // change to another proxy
+                console.error(`${url} tried ${currentTry} time. -- proxy: ${proxy.host}:${proxy.port}`);
+                proxy = await getAProxy(); // change to another proxy
                 return fetch(url);
             }
             else {
@@ -85,5 +87,6 @@ var fetch = async function (url) {
 
 module.exports = {
     pause: 500,
-    fetch: fetch
+    fetch: fetch,
+    initProxy: initProxy
 }

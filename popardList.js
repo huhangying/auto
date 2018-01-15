@@ -101,6 +101,7 @@ var getPageList = function(myUrl, body) {
 };
 
 async function fetchList() {
+    await myUtil.initProxy();
     // get started from the first url
     return await processList(urls[0]);
 }

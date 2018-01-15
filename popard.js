@@ -116,7 +116,10 @@ var processDetails = function (myUrl, isSibling, firstSibling) {
 
         });
 };
-var crawlUrlListFromDb = function() {
+
+var crawlUrlListFromDb = async function() {
+    await myUtil.initProxy();
+
     //db = global.mongoose.connection;
     News.GetTodoList()
         .then(function(results) {
