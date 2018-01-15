@@ -72,12 +72,12 @@ var fetch = async function (url) {
         .catch(async error => {
             if (currentTry < maxTry) {
                 currentTry++;
-                console.error(`${url} tried ${currentTry} time. -- proxy: ${proxy.host}:${proxy.port}`);
+                console.error(`${url} tried ${currentTry} time. -- proxy: ${JSON.stringify(proxy)}`);
                 proxy = await getAProxy(); // change to another proxy
                 return fetch(url);
             }
             else {
-                console.error(`${url} tried ${currentTry} time. -- proxy: ${proxy.host}:${proxy.port} failed.`);
+                console.error(`${url} tried ${currentTry} time. -- proxy: ${JSON.stringify(proxy)} failed.`);
                 console.error(error.stack + '|' + error );
                 currentTry = 0;
                 return `<html>${error.stack}</html>`;
