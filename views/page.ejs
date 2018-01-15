@@ -2,9 +2,17 @@
 <html lang="en">
 <body>
 <div id="content" class="mx-auto" style="width: 960px;">
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item"><a href="/cat/<%= page.cat %>"><%= catTitle %></a></li>
+        </ol>
+    </nav>
+
     <h2 class="text-center"><%= (page.title) %></h2>
     <hr>
-    <div class="font-weight-light pb-4" style="margin-top: -.8em;">
+    <div class="text-right font-weight-light pb-4" style="margin-top: -.8em;">
         来源: <%= page.from %> | 时间: <%= page.date.toLocaleDateString() %>
     </div>
 
@@ -20,21 +28,37 @@
     <% }}); %>
 
     <% if (page.siblingNum > 0) { %>
-    <nav aria-label="Page navigation">
-        <ul class="pagination pagination-lg justify-content-center">
-            <% if (page.siblings) { %>
+
+        <% if (page.siblings) { %>
+        <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center">
+                <li class="page-item invisible">
+                    <a class="page-link" href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                </li>
                 <% page.siblings.forEach(function(s, index) { %>
 
                     <% if (s.id === page.id) { %>
-                        <li class="page-item"><span><%= index + 1 %></span></li>
+                        <li class="page-item"><a href="#" class="page-link text-muted"><%= index + 1 %></a></li>
                     <% } else { %>
-                        <li class="page-item"><a href="../page/<%= s.id %>"> <%= index + 1 %></a></li>
+                        <li class="page-item">
+                            <a href="../page/<%= s.id %>" class="page-link"><%= index + 1 %></a>
+                        </li>
                     <% } %>
 
                 <% })%>
-            <% } %>
-        </ul>
-    </nav>
+                <li class="page-item invisible">
+                    <a class="page-link" href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <% } %>
+
     <% } %>
 
 </div>

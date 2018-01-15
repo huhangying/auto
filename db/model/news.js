@@ -1,7 +1,7 @@
 var newsSchema = global.mongoose.Schema({
         id: { type: String},
         title: String,
-        cat: String,
+        cat: { type: String },
         from: String,
         date: { type: Date },
         href: String,

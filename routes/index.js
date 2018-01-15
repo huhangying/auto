@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 var News = require('../db/controller/news');
+var config = require('../util/config');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -16,9 +17,10 @@ router.get('/', function(req, res, next) {
 /* Category page. */
 router.get('/cat/:id', function(req, res, next) {
     if (req.params && req.params.id) {
+        let cat = parseInt(req.params.id)
         News.getListByCat(req.params.id).then(
             function(list) {
-                res.render('cat', { title: 'Express', list: list });
+                res.render('cat', { title: config.cats[cat].title, list: list });
             }
         );
     }
@@ -38,7 +40,7 @@ router.get('/page/:id', function(req, res, next) {
                   });
               }
 
-              res.render('page', {title: page.title, page: page, contentList: contentList});
+              res.render('page', {catTitle: config.cats[page.cat].title, title: page.title, page: page, contentList: contentList});
             }
         );
     }

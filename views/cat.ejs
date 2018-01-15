@@ -10,16 +10,24 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
 </head>
 <body>
-<h1>Hello, world!</h1>
+<div id="content" class="mx-auto" style="width: 960px;">
 
-<ul>
-    <% list.forEach(function(article) { %>
-    <li><a href="../page/<%= article.id %>"><%= article.title %> - <%= article.from %>  <%= article.date %></a> </li>
-    <% }); %>
-</ul>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+        </ol>
+    </nav>
+    <h2><%= title %></h2>
 
-<div>
-    <%= list.length %>
+    <ul>
+        <% list.forEach(function(article) { %>
+        <li><a href="../page/<%= article.id %>"><%= article.title %> - <%= article.from %>  <%= article.date %></a> </li>
+        <% }); %>
+    </ul>
+
+    <div>
+        <%= list.length %>
+    </div>
 </div>
 
 <!-- Optional JavaScript -->
