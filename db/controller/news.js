@@ -162,7 +162,7 @@ module.exports = {
             //console.log(number);
         }
 
-        NewsModel.find({cat: req.params.cat}, '-_id title from date href')
+        NewsModel.find({cat: req.params.cat}, '-_id id title from date')
             .sort({updated: -1})
             .limit(number)
             .exec(function(err, items){
