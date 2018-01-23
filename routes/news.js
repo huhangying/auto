@@ -16,4 +16,10 @@ router.route('/cat/:cat/:number')
 router.route('/sibs/:id')
     .get(News.GetSiblings);
 
+router.route('/hot/:number')
+    .get(News.GetHot);
+
+router.route('/latest/:number')
+    .get(News.GetLatest);
+
 module.exports = router;

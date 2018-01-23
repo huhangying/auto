@@ -139,7 +139,7 @@ module.exports = {
 
         NewsModel.find({})
             // .sort({updated: -1})
-            // .limit(number)
+            .limit(number)
             .exec(function(err, users){
                 if (err) {
                     return Status.returnStatus(res, Status.ERROR, err);
@@ -213,6 +213,34 @@ module.exports = {
                     res.json(items);
                 });
         }
+    },
+
+
+    GetHot: function(req, res) {
+
+    },
+    // get latest top 100
+    GetLatest: function(req, res) {
+        var number = 85; // set default max return numbers
+        if (req.params && req.params.number) {
+            number = _.parseInt(req.params.number);
+        }
+
+        NewsModel.find({loaded: true, hasSiblings: {$exists: true}},
+        '-_id id title from date')
+            .sort({updated: -1})
+            .limit(number)
+            .exec(function(err, items){
+                if (err) {
+                    return Status.returnStatus(res, Status.ERROR, err);
+                }
+
+                if (!items || items.length < 1) {
+                    return Status.returnStatus(res, Status.NULL);
+                }
+
+                res.json(items);
+            });
     },
 
     UpdateByLinkId: function(req, res){
