@@ -20,12 +20,12 @@ setTimeout( () => {
             popyard.crawlUrlListFromDb();
         }
     );
-}, 500);
+}, 600);
 
 
 
 var job = new CronJob({
-    cronTime: '0 24 6 * * *', //
+    cronTime: '0 24 05 * * *', //
     onTick: function() {
         /*
          * Runs every two hours
@@ -37,7 +37,7 @@ var job = new CronJob({
                     popyard.crawlUrlListFromDb();
                 }
             );
-        }, 500);
+        }, 600);
     },
     start: false
 });
