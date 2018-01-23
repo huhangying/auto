@@ -154,15 +154,16 @@ module.exports = {
     },
 
     // news/cat/:cat/:number
+    // the list not include sibling pages
     GetAllByCat: function (req, res) {
-        var number = 85; // set max return numbers
+        var number = 85; // set default max return numbers
 
         if (req.params && req.params.number && req.params.cat) {
             number = _.parseInt(req.params.number);
-            //console.log(number);
         }
 
-        NewsModel.find({cat: req.params.cat}, '-_id id title from date')
+        NewsModel.find({cat: req.params.cat, loaded: true, hasSiblings: {$exists: true}},
+            '-_id id title from date')
             .sort({updated: -1})
             .limit(number)
             .exec(function(err, items){

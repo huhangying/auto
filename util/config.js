@@ -4,7 +4,7 @@ module.exports =  {
     cats: [
         // 0
         {
-            title: ''
+            title: '热点'
         },
         // 1
         {
