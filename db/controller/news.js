@@ -163,7 +163,7 @@ module.exports = {
         }
 
         NewsModel.find({cat: req.params.cat, loaded: true, hasSiblings: {$exists: true}},
-            '-_id id title from date')
+            '-_id id title from date imgs')
             .sort({date: -1})
             .limit(number)
             .exec(function(err, items){
@@ -227,7 +227,7 @@ module.exports = {
         }
 
         NewsModel.find({loaded: true, hasSiblings: {$exists: true}},
-        '-_id id title from date')
+        '-_id id title from date imgs')
             .sort({date: -1})
             .limit(number)
             .exec(function(err, items){
