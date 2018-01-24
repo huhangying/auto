@@ -43,16 +43,20 @@ var processDetails = function (myUrl, isSibling, firstSibling) {
                 }
             }
 
-            let item, content = '';
+            let item, content = '', imgs = '';
             rows.each(function (index, row) {
                 if (row.name === 'p' && index > 0) { // text. first p is for ad. remove it.
                     p = $(this).text();
                 }
                 else if (row.name === 'center') { // image
                     p = $(this).find('table a img').attr('src');
-                    if (p && config.downloadImage) {
-                        imgDownloader.downloadImage(p); // run it in the back
+                    if (p) {
                         p = p.replace(/^.*[\\\/]/, ''); // save fileName only to db
+                        imgs += p + '|';
+                        if (config.downloadImage) {
+                            imgDownloader.downloadImage(p); // run it in the back
+                            //todo: make thumb version of the image
+                        }
                     }
                 }
                 if (p) {
@@ -61,6 +65,9 @@ var processDetails = function (myUrl, isSibling, firstSibling) {
             });
 
             content = content.slice(0, -1); // remove last character
+            if (imgs) {
+                imgs = imgs.slice(0, -1); // remove last character
+            }
             item = {
                 id: myId,
                 content: content,
@@ -82,6 +89,8 @@ var processDetails = function (myUrl, isSibling, firstSibling) {
                     item.siblingId = item.id;
                     item.siblingNum = 1;
                 }
+                // first page or only page
+                item.imgs = imgs;
             }
             console.log(item);
             return News.model.findOneAndUpdate({'id': item.id}, item, {upsert: true});

@@ -8,6 +8,7 @@ var newsSchema = global.mongoose.Schema({
         count: { type: Number, default: 0 },
         loaded: { type: Boolean },
         content: { type: String },
+        imgs: {type: String }, // store image thumb for first page.
         hasSiblings: {type: Boolean},
         siblingNum: { type: Number },
         siblingId: { type: String }
