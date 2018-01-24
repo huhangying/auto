@@ -138,7 +138,7 @@ module.exports = {
         }
 
         NewsModel.find({})
-            // .sort({updated: -1})
+            // .sort({date: -1})
             .limit(number)
             .exec(function(err, users){
                 if (err) {
@@ -164,7 +164,7 @@ module.exports = {
 
         NewsModel.find({cat: req.params.cat, loaded: true, hasSiblings: {$exists: true}},
             '-_id id title from date')
-            .sort({updated: -1})
+            .sort({date: -1})
             .limit(number)
             .exec(function(err, items){
                 if (err) {
@@ -228,7 +228,7 @@ module.exports = {
 
         NewsModel.find({loaded: true, hasSiblings: {$exists: true}},
         '-_id id title from date')
-            .sort({updated: -1})
+            .sort({date: -1})
             .limit(number)
             .exec(function(err, items){
                 if (err) {
@@ -241,60 +241,6 @@ module.exports = {
 
                 res.json(items);
             });
-    },
-
-    UpdateByLinkId: function(req, res){
-        if (req.params && req.params.id) { // params.id is WeChat ID
-            var linkId = req.params.id;
-
-            // 获取user数据（json）
-            var user = req.body;
-            if (!user) return res.sendStatus(400);
-
-            NewsModel.findOne({link_id: linkId}, function (err, item) {
-                if (err) {
-                    return Status.returnStatus(res, Status.ERROR, err);
-                }
-
-                if (!item){
-                    return Status.returnStatus(res, Status.NULL);
-                }
-
-                if (user.name)
-                    item.name = user.name;
-                if (user.cell)
-                    item.cell = user.cell;
-                if (user.gender)
-                    item.gender = user.gender;
-                if (user.birthdate)
-                    item.birthdate = user.birthdate;
-                if (user.role || user.role == 0)
-                    item.role = user.role;
-                if (user.sin)
-                    item.sin = user.sin;
-                if (user.admissionNumber)
-                    item.admissionNumber = user.admissionNumber;
-                if (user.icon)
-                    item.icon = user.icon || '';
-                if (user.apply || user.apply === false)
-                    item.apply = user.apply;
-
-                if (user.visitedDepartments) {
-                    item.visitedDepartments = user.visitedDepartments;
-                }
-
-                //console.log(JSON.stringify(item));
-
-                //
-                item.save(function(err, raw){
-                    if (err) {
-                        return Status.returnStatus(res, Status.ERROR, err);
-                    }
-                    res.json(raw); //update user success
-                });
-
-            });
-        }
     },
 
     // for test
