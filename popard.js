@@ -51,12 +51,12 @@ var processDetails = function (myUrl, isSibling, firstSibling) {
                 else if (row.name === 'center') { // image
                     p = $(this).find('table a img').attr('src');
                     if (p) {
-                        p = p.replace(/^.*[\\\/]/, ''); // save fileName only to db
-                        imgs += p + '|';
                         if (config.downloadImage) {
                             imgDownloader.downloadImage(p); // run it in the back
                             //todo: make thumb version of the image
                         }
+                        p = p.replace(/^.*[\\\/]/, ''); // save fileName only to db
+                        imgs += p + '|';
                     }
                 }
                 if (p) {
