@@ -25,7 +25,7 @@ setTimeout( () => {
 
 
 var job = new CronJob({
-    cronTime: '0 24 05 * * *', //
+    cronTime: '0 24 */2 * * *', //
     onTick: function() {
         /*
          * Runs every two hours

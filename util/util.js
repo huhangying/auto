@@ -44,6 +44,12 @@ const initProxy = async() => {
 //todo: support retry with different proxy when failed
 var fetch = async function (url) {
     //url = getUri(url);
+
+  // prepare proxy if not existed
+  if (!proxy) {
+    proxy = await getAProxy(); // change to another proxy
+  }
+
     url = getFullUrl(url);
     console.log('Processing', url, 'proxy:', JSON.stringify(proxy));
 
