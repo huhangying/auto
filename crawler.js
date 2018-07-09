@@ -41,4 +41,4 @@ var job = new CronJob({
     },
     start: false
 });
-//job.start();
+job.start();
