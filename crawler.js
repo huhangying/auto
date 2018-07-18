@@ -2,43 +2,45 @@ global.Promise = require('bluebird');
 global.mongoose = require('mongoose');
 global.mongoose.Promise = global.Promise;
 global.Promise.promisifyAll(global.mongoose);
-var CronJob = require('cron').CronJob;
+const CronJob = require('cron').CronJob;
 
 const popyardList = require('./popardList');
 const popyard = require('./popard.js');
 
-async function prepare() {
-    const db = global.mongoose.connect('mongodb://127.0.0.1:27017/test', { useMongoClient: true });
+const prepare = () => {
+    try {
+        const db = global.mongoose.connect('mongodb://127.0.0.1:27017/test', { useMongoClient: true });
+    }
+    catch (e) {
+      console.error(e.stack);
+    }
     //await db.dropDatabase();
 }
-prepare().catch(error => console.error(error.stack));
 
-
-setTimeout( () => {
-    popyardList.fetchList().then(
-        () => {
-            popyard.crawlUrlListFromDb();
-        }
-    );
-}, 600);
-
+const doCrawler = async() => {
+  await popyardList.fetchList();
+  await popyard.crawlUrlListFromDb();
+};
 
 
 var job = new CronJob({
-    cronTime: '0 24 */2 * * *', //
+    cronTime: '0 24 */2 * * *', // run every two hours
     onTick: function() {
-        /*
-         * Runs every two hours
-         */
-        //console.log(new Date());
-        setTimeout( () => {
-            popyardList.fetchList().then(
-                () => {
-                    popyard.crawlUrlListFromDb();
-                }
-            );
-        }, 600);
+      /*
+       * Runs every two hours
+       */
+      //console.log(new Date());
+      doCrawler();
     },
     start: false
 });
-job.start();
+
+try {
+  prepare();
+  // job.start();
+  doCrawler();
+}
+catch(error) {
+  error => console.error(error.stack)
+}
+

@@ -37,12 +37,12 @@ const getAProxy = async () => {
     return aproxy;
 };
 
-const initProxy = () => {
-    proxy = undefined;
-}
+const initProxy = async() => {
+    proxy = await getAProxy();
+};
 
 //todo: support retry with different proxy when failed
-var fetch = async function (url) {
+const fetch = async function (url) {
     //url = getUri(url);
 
   // prepare proxy if not existed

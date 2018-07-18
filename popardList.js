@@ -23,22 +23,19 @@ var urls = [
 var $;
 var i = 0;
 
-var processList = function (myUrl) {
-    // var cat;
-    // var rows = [];
-    if (!myUrl) {return;}
+var processList = async(myUrl) => {
+  // var cat;
+  // var rows = [];
+  if (!myUrl) {return;}
 
-    let results = [];
-    return myUtil.fetch(myUrl)
+  let results = [];
+  let body = await myUtil.fetch(myUrl);
+  const items = await getPageList(myUrl, body);
 
-        .then(async (body) => {
-            const items = await getPageList(myUrl, body);
-
-             return Promise.map(items,
-                item => {
-                 return News.updateItem(item);
-                });
-        })
+  return Promise.map(items,
+    item => {
+      return News.updateItem(item);
+    })
         .then((results) => {
             results = results.filter(result => {
                 return result && result.id;
@@ -53,8 +50,8 @@ var processList = function (myUrl) {
             else {
                 console.log('*********** No more lists to process, exiting. ****************');
             }
-        })
-        .catch(error => console.error(error.stack));
+        });
+        //.catch(error => console.error(error.stack));
 };
 
 //
