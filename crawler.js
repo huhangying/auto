@@ -35,13 +35,13 @@ var job = new CronJob({
     start: false
 });
 
-try {
+// try {
   prepare();
   // job.start();
   console.log('====> Start at: ', new Date());
   doCrawler();
-}
-catch(error) {
-  error => console.error(error.stack)
-}
+// }
+// catch(error) {
+//   error => console.error(error.stack)
+// }
 
