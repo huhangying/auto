@@ -3,7 +3,7 @@ let http = require('http');
 require('axios-debug-log');
 
 const baseUrl = 'http://www.popyard.com/cgi-mod/';
-const maxTry = 10;
+const maxTry = 100;
 let currentTry = 0;
 let proxy = {};
 
@@ -37,7 +37,7 @@ const getAProxy = async () => {
     return aproxy;
 };
 
-const initProxy = async() => {
+const initProxy = () => {
     proxy = undefined;
 }
 
@@ -47,7 +47,8 @@ var fetch = async function (url) {
 
   // prepare proxy if not existed
   if (!proxy) {
-    proxy = await getAProxy(); // change to another proxy
+      proxy = await getAProxy();
+    // throw 'error';
   }
 
     url = getFullUrl(url);
@@ -60,7 +61,7 @@ var fetch = async function (url) {
             'User-Agent':'Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.24) Gecko/20111109 CentOS/3.6.24-3.el6.centos Firefox/3.6.24'
         },
         proxy: proxy,
-        timeout: 3000,
+        timeout: 10000,
         maxRedirects: 0, // 5 by default
         responseType: 'text',
         httpAgent: new http.Agent({ keepAlive: true })
@@ -92,7 +93,7 @@ var fetch = async function (url) {
 };
 
 module.exports = {
-    pause: 500,
+    pause: 666,
     fetch: fetch,
     initProxy: initProxy
 }
