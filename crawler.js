@@ -38,6 +38,7 @@ var job = new CronJob({
 try {
   prepare();
   // job.start();
+  console.log('====> Start at: ', new Date());
   doCrawler();
 }
 catch(error) {
