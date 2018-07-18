@@ -39,7 +39,9 @@ const getAProxy = async () => {
 
 const initProxy = async() => {
   // prepare proxy if not existed
-  proxy = proxy || (await getAProxy());
+  if (!proxy || !proxy.host || !proxy.port) {
+    proxy = await getAProxy();
+  }
 };
 
 //todo: support retry with different proxy when failed
