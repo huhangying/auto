@@ -50,8 +50,8 @@ var processList = async(myUrl) => {
             else {
                 console.log('*********** No more lists to process, exiting. ****************');
             }
-        });
-        //.catch(error => console.error(error.stack));
+        })
+        .catch(error => console.error(error.stack));
 };
 
 //
