@@ -122,7 +122,6 @@ var processDetails = function (myUrl, isSibling, firstSibling) {
         })
         .catch(function (err) {
             throw err;
-
         });
 };
 
@@ -131,7 +130,7 @@ var crawlUrlListFromDb = async function() {
 
     //db = global.mongoose.connection;
     News.GetTodoList()
-        .then(function(results) {
+        .then(async(results) => {
 
             // reset environment
             pages = [];
@@ -149,7 +148,10 @@ var crawlUrlListFromDb = async function() {
                 processDetails(pages[index].href, false, pages[index]);
             }
 
-        });
+        })
+      .catch(async (err) => {
+        console.error(err.stack)
+      });
 };
 
 module.exports = {

@@ -38,19 +38,13 @@ const getAProxy = async () => {
 };
 
 const initProxy = async() => {
-    proxy = await getAProxy();
+  // prepare proxy if not existed
+  proxy = proxy || (await getAProxy());
 };
 
 //todo: support retry with different proxy when failed
 const fetch = async function (url) {
     //url = getUri(url);
-
-  // prepare proxy if not existed
-  if (!proxy) {
-      proxy = await getAProxy();
-    // throw 'error';
-  }
-
     url = getFullUrl(url);
     console.log('Processing', url, 'proxy:', JSON.stringify(proxy));
 
