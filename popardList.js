@@ -32,26 +32,26 @@ var processList = async(myUrl) => {
   let body = await myUtil.fetch(myUrl);
   const items = await getPageList(myUrl, body);
 
-  return Promise.map(items,
+  return await Promise.map(items,
     item => {
       return News.updateItem(item);
     })
-        .then((results) => {
-            results = results.filter(result => {
-                return result && result.id;
-            });
+    .then((results) => {
+      results = results.filter(result => {
+        return result && result.id;
+      });
+      console.log('Upserted', results.length, 'records');
 
-            console.log('Upserted', results.length, 'records');
-            if (++i < urls.length) {
-                setTimeout(function () {
-                    processList(urls[i]);
-                }, myUtil.pause);
-            }
-            else {
-                console.log('*********** No more lists to process, exiting. ****************');
-            }
-        })
-        .catch(error => console.error(error.stack));
+      if (++i < urls.length) {
+        setTimeout(function () {
+          processList(urls[i]);
+        }, myUtil.pause);
+      }
+      else {
+        console.log('*********** No more lists to process, exiting. ****************');
+      }
+    })
+    .catch(error => console.error(error.stack));
 };
 
 //
