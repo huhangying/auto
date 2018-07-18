@@ -8,16 +8,16 @@ var myUtil = require('./util/util');
 
 var urls = [
     'http://www.popyard.com/cgi-mod/threads.cgi?cate=1&p=1&r=0',
-    'http://www.popyard.com/cgi-mod/threads.cgi?cate=2&p=1&r=0',
-    'http://www.popyard.com/cgi-mod/threads.cgi?cate=3&p=1&r=0',
-    'http://www.popyard.com/cgi-mod/threads.cgi?cate=4&p=1&r=0',
-    'http://www.popyard.com/cgi-mod/threads.cgi?cate=5&p=1&r=0',
-    'http://www.popyard.com/cgi-mod/threads.cgi?cate=6&p=1&r=0',
-    'http://www.popyard.com/cgi-mod/threads.cgi?cate=7&p=1&r=0',
-    'http://www.popyard.com/cgi-mod/threads.cgi?cate=8&p=1&r=0',
-    'http://www.popyard.com/cgi-mod/threads.cgi?cate=9&p=1&r=0',
-    'http://www.popyard.com/cgi-mod/threads.cgi?cate=10&p=1&r=0',
-    'http://www.popyard.com/cgi-mod/threads.cgi?cate=11&p=1&r=0',
+    // 'http://www.popyard.com/cgi-mod/threads.cgi?cate=2&p=1&r=0',
+    // 'http://www.popyard.com/cgi-mod/threads.cgi?cate=3&p=1&r=0',
+    // 'http://www.popyard.com/cgi-mod/threads.cgi?cate=4&p=1&r=0',
+    // 'http://www.popyard.com/cgi-mod/threads.cgi?cate=5&p=1&r=0',
+    // 'http://www.popyard.com/cgi-mod/threads.cgi?cate=6&p=1&r=0',
+    // 'http://www.popyard.com/cgi-mod/threads.cgi?cate=7&p=1&r=0',
+    // 'http://www.popyard.com/cgi-mod/threads.cgi?cate=8&p=1&r=0',
+    // 'http://www.popyard.com/cgi-mod/threads.cgi?cate=9&p=1&r=0',
+    // 'http://www.popyard.com/cgi-mod/threads.cgi?cate=10&p=1&r=0',
+    // 'http://www.popyard.com/cgi-mod/threads.cgi?cate=11&p=1&r=0',
     'http://www.popyard.com/cgi-mod/threads.cgi?cate=12&p=1&r=0'
 ];
 var $;
@@ -41,17 +41,17 @@ var processList = async(myUrl) => {
         return result && result.id;
       });
       console.log('Upserted', results.length, 'records');
-
-      if (++i < urls.length) {
-        setTimeout(function () {
-          processList(urls[i]);
-        }, myUtil.pause);
-      }
-      else {
-        console.log('*********** No more lists to process, exiting. ****************');
-      }
+      //
+      // if (++i < urls.length) {
+      //   setTimeout(function () {
+      //     processList(urls[i]);
+      //   }, myUtil.pause);
+      // }
+      // else {
+      //   console.log('*********** No more lists to process, exiting. ****************');
+      // }
     })
-    .catch(error => console.error(error.stack));
+    //.catch(error => console.error(error.stack)); // skip it if error!
 };
 
 //
@@ -99,8 +99,12 @@ var getPageList = function(myUrl, body) {
 
 async function fetchList() {
     await myUtil.initProxy();
+
+    let promises = [];
+    urls.map(async (u) => promises.push(processList(u)));
     // get started from the first url
-    return await processList(urls[0]);
+    return await Promise.all(promises);
+  //processList(urls[0]);
 }
 
 

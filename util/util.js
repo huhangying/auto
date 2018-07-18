@@ -37,7 +37,12 @@ const getAProxy = async () => {
     return aproxy;
 };
 
-const initProxy = async() => {
+const initProxy = async(disableProxy) => {
+    if (disableProxy) {
+        proxy = undefined;
+        return;
+    }
+
   // prepare proxy if not existed
   if (!proxy || !proxy.host || !proxy.port) {
     proxy = await getAProxy();

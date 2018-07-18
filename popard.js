@@ -125,7 +125,7 @@ var processDetails = function (myUrl, isSibling, firstSibling) {
         });
 };
 
-var crawlUrlListFromDb = async function() {
+const crawlUrlListFromDb = async () => {
     await myUtil.initProxy();
 
     //db = global.mongoose.connection;

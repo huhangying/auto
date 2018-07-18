@@ -19,6 +19,7 @@ const prepare = () => {
 
 const doCrawler = async() => {
   await popyardList.fetchList();
+  console.log('*********** done processing lists, continue. ****************');
   await popyard.crawlUrlListFromDb();
 };
 
