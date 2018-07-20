@@ -22,7 +22,6 @@ var urls = [
 var $;
 
 var processList = async(myUrl) => {
-
   if (!myUrl) {return;}
 
   let results = [];
@@ -41,12 +40,11 @@ var processList = async(myUrl) => {
 
 //
 var getPageList = function(myUrl, body) {
-    var devs = [], dev, myId, href, title, from, date;
-    var titles = [], froms = [];
-
+    let devs = [], dev, myId, href, title, from, date;
+    let titles = [], froms = [];
 
     $ = cheerio.load(body);
-    const cat = url.parse(myUrl, true).query.cate;
+    let cat = url.parse(myUrl, true).query.cate;
 
     // page list
     //$('.results > .row').eq(0).remove(); // remove header row
@@ -84,10 +82,16 @@ var getPageList = function(myUrl, body) {
 async function fetchList() {
   //await myUtil.initProxy();
 
-  let promises = [];
-  urls.map((u) => promises.push(processList(u)));
+  // let promises = [];
+  // urls.map((u) => {
+  //   promises.push(processList(u))
+  // });
+  // return await Promise.all(promises);
 
-  return await Promise.all(promises);
+  for (let i=0; i<urls.length; i++) {
+    await processList(urls[i]);
+  }
+
 }
 
 

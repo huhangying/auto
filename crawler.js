@@ -40,10 +40,10 @@ const endCrawler = () => {
     console.log('====> End at: ', new Date());
     db.close();
   }
-}
+};
 
 
-var job = new CronJob({
+const job = new CronJob({
     cronTime: '0 24 */2 * * *', // run every two hours
     onTick: function() {
       /*
