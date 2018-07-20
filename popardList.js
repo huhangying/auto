@@ -80,7 +80,8 @@ var getPageList = function(myUrl, body) {
 };
 
 async function fetchList() {
-  //await myUtil.initProxy();
+    // first time use proxy
+  await myUtil.initProxy(true);
 
   // let promises = [];
   // urls.map((u) => {

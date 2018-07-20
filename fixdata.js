@@ -15,11 +15,12 @@ var config = require('./util/config');
 var $;
 var pages = [];
 var index = 0;
+let db;
 
 
 async function prepare() {
-    const db = global.mongoose.connect('mongodb://127.0.0.1:27017/test', { useMongoClient: true });
-    await myUtil.initProxy();
+    db = global.mongoose.connect('mongodb://127.0.0.1:27017/test', { useMongoClient: true });
+    await myUtil.initProxy(true);
     //await db.dropDatabase();
 }
 prepare().catch(error => console.error(error.stack));
