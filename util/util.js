@@ -3,9 +3,9 @@ let http = require('http');
 require('axios-debug-log');
 
 const baseUrl = 'http://www.popyard.com/cgi-mod/';
-const maxTry = 100;
+const maxTry = 20;
 let currentTry = 0;
-let proxy = {};
+let proxy;
 
 var getFullUrl = function(str) {
     if (str.indexOf(baseUrl) < 0) {
@@ -37,20 +37,17 @@ const getAProxy = async () => {
     return aproxy;
 };
 
-const initProxy = async(disableProxy) => {
-    if (disableProxy) {
-        proxy = undefined;
-        return;
-    }
-
-  // prepare proxy if not existed
-  if (!proxy || !proxy.host || !proxy.port) {
+const initProxy = async(startWithProxy) => {
+  if (!startWithProxy) {
+    proxy = undefined;
+  }
+  else {
     proxy = await getAProxy();
   }
 };
 
 //todo: support retry with different proxy when failed
-const fetch = async function (url) {
+const fetch = async (url) => {
     //url = getUri(url);
     url = getFullUrl(url);
     console.log('Processing', url, 'proxy:', JSON.stringify(proxy));
@@ -81,8 +78,9 @@ const fetch = async function (url) {
             if (currentTry < maxTry) {
                 currentTry++;
                 console.error(`${url} tried ${currentTry} time. -- proxy: ${JSON.stringify(proxy)}`);
+                // prepare proxy if not existed
                 proxy = await getAProxy(); // change to another proxy
-                return fetch(url);
+                return await fetch(url);
             }
             else {
                 console.error(`${url} tried ${currentTry} time. -- proxy: ${JSON.stringify(proxy)} failed.`);

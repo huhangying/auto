@@ -2,26 +2,45 @@ global.Promise = require('bluebird');
 global.mongoose = require('mongoose');
 global.mongoose.Promise = global.Promise;
 global.Promise.promisifyAll(global.mongoose);
+let db;
+let isRunning = false;
 const CronJob = require('cron').CronJob;
 
 const popyardList = require('./popardList');
 const popyard = require('./popard.js');
 
-const prepare = () => {
-    try {
-        const db = global.mongoose.connect('mongodb://127.0.0.1:27017/test', { useMongoClient: true });
-    }
-    catch (e) {
-      console.error(e.stack);
-    }
-    //await db.dropDatabase();
+const connectDb = async() => {
+   db = await global.mongoose.connect('mongodb://127.0.0.1:27017/test', { useMongoClient: true });
+   //await db.dropDatabase();
 }
 
 const doCrawler = async() => {
-  await popyardList.fetchList();
-  console.log('*********** done processing lists, continue. ****************');
-  await popyard.crawlUrlListFromDb();
+  await connectDb()
+    .then(async() => {
+      isRunning = true;
+      console.log('====> Start at: ', new Date());
+
+      await popyardList.fetchList();
+      console.log('*********** done processing lists, continue. ****************');
+      await popyard.crawlUrlListFromDb();
+
+      endCrawler();
+    })
+    .catch(e => {
+      console.error('====> Error: ', e.stack);
+      endCrawler();
+    });
+
 };
+
+const endCrawler = () => {
+  // end
+  isRunning = false;
+  if (db) {
+    console.log('====> End at: ', new Date());
+    db.close();
+  }
+}
 
 
 var job = new CronJob({
@@ -30,19 +49,13 @@ var job = new CronJob({
       /*
        * Runs every two hours
        */
-      //console.log(new Date());
-      doCrawler();
+      if (!isRunning) {
+        doCrawler();
+      }
     },
     start: false
 });
 
-// try {
-  prepare();
-  // job.start();
-  console.log('====> Start at: ', new Date());
-  doCrawler();
-// }
-// catch(error) {
-//   error => console.error(error.stack)
-// }
 
+doCrawler();
+job.start();

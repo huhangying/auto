@@ -4,8 +4,8 @@ module.exports = {
     model: NewsModel,
 
     //
-    GetTodoList: function() {
-        return NewsModel.find({ loaded: {$ne: true}})
+    GetTodoList: async () => {
+        return await NewsModel.find({ loaded: {$ne: true}})
             .sort({date: -1})
             .exec(function(err, items){
                 if (err) {

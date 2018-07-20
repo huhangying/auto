@@ -1,4 +1,3 @@
-
 let cheerio = require('cheerio');
 var url = require('url');
 
@@ -8,50 +7,36 @@ var myUtil = require('./util/util');
 
 var urls = [
     'http://www.popyard.com/cgi-mod/threads.cgi?cate=1&p=1&r=0',
-    // 'http://www.popyard.com/cgi-mod/threads.cgi?cate=2&p=1&r=0',
-    // 'http://www.popyard.com/cgi-mod/threads.cgi?cate=3&p=1&r=0',
-    // 'http://www.popyard.com/cgi-mod/threads.cgi?cate=4&p=1&r=0',
-    // 'http://www.popyard.com/cgi-mod/threads.cgi?cate=5&p=1&r=0',
-    // 'http://www.popyard.com/cgi-mod/threads.cgi?cate=6&p=1&r=0',
-    // 'http://www.popyard.com/cgi-mod/threads.cgi?cate=7&p=1&r=0',
-    // 'http://www.popyard.com/cgi-mod/threads.cgi?cate=8&p=1&r=0',
-    // 'http://www.popyard.com/cgi-mod/threads.cgi?cate=9&p=1&r=0',
-    // 'http://www.popyard.com/cgi-mod/threads.cgi?cate=10&p=1&r=0',
-    // 'http://www.popyard.com/cgi-mod/threads.cgi?cate=11&p=1&r=0',
+    'http://www.popyard.com/cgi-mod/threads.cgi?cate=2&p=1&r=0',
+    'http://www.popyard.com/cgi-mod/threads.cgi?cate=3&p=1&r=0',
+    'http://www.popyard.com/cgi-mod/threads.cgi?cate=4&p=1&r=0',
+    'http://www.popyard.com/cgi-mod/threads.cgi?cate=5&p=1&r=0',
+    'http://www.popyard.com/cgi-mod/threads.cgi?cate=6&p=1&r=0',
+    'http://www.popyard.com/cgi-mod/threads.cgi?cate=7&p=1&r=0',
+    'http://www.popyard.com/cgi-mod/threads.cgi?cate=8&p=1&r=0',
+    'http://www.popyard.com/cgi-mod/threads.cgi?cate=9&p=1&r=0',
+    'http://www.popyard.com/cgi-mod/threads.cgi?cate=10&p=1&r=0',
+    'http://www.popyard.com/cgi-mod/threads.cgi?cate=11&p=1&r=0',
     'http://www.popyard.com/cgi-mod/threads.cgi?cate=12&p=1&r=0'
 ];
 var $;
-var i = 0;
 
 var processList = async(myUrl) => {
-  // var cat;
-  // var rows = [];
+
   if (!myUrl) {return;}
 
   let results = [];
   let body = await myUtil.fetch(myUrl);
   const items = await getPageList(myUrl, body);
 
-  return await Promise.all(items.map(News.updateItem))
-    // item => {
-    //   return News.updateItem(item);
-    // })
+  return await Promise.all(
+    items.map(News.updateItem))
     .then((results) => {
       results = results.filter(result => {
         return result && result.id;
       });
       console.log('Upserted', results.length, 'records');
-      //
-      // if (++i < urls.length) {
-      //   setTimeout(function () {
-      //     processList(urls[i]);
-      //   }, myUtil.pause);
-      // }
-      // else {
-      //   console.log('*********** No more lists to process, exiting. ****************');
-      // }
-    })
-    //.catch(error => console.error(error.stack)); // skip it if error!
+    });
 };
 
 //
@@ -65,7 +50,7 @@ var getPageList = function(myUrl, body) {
 
     // page list
     //$('.results > .row').eq(0).remove(); // remove header row
-    const rows = $('p table tbody tr td font li');
+    let rows = $('p table tbody tr td font li');
 
     rows.each(function () {
         href = $(this).find('a').attr('href');
@@ -89,7 +74,6 @@ var getPageList = function(myUrl, body) {
                 date: date,
                 href: href // use internally
             };
-            //console.log(dev);
             devs.push(dev);
         }
 
@@ -98,13 +82,12 @@ var getPageList = function(myUrl, body) {
 };
 
 async function fetchList() {
-    await myUtil.initProxy();
+  //await myUtil.initProxy();
 
-    let promises = [];
-    urls.map(async (u) => promises.push(processList(u)));
-    // get started from the first url
-    return await Promise.all(promises);
-  //processList(urls[0]);
+  let promises = [];
+  urls.map((u) => promises.push(processList(u)));
+
+  return await Promise.all(promises);
 }
 
 
